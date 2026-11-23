@@ -96,6 +96,8 @@ python -m scripts.run_evaluation \
 
 Разбор результатов и выявленные проблемы: [анализ прогона](evaluation/analysis.md).
 
+Сравнение моделей на том же наборе: [результаты и выбор модели](evaluation/model-comparison.md).
+
 ## Материалы курса
 
 - [Декомпозиция AI-системы для оценки](docs/dekompozitsiya-ai-sistemy.md)
