@@ -2,3 +2,4 @@ fastapi>=0.110
 uvicorn[standard]>=0.29
 openai>=1.50
 pydantic>=2.6
+pandas>=2.2

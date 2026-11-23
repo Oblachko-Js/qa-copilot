@@ -1,0 +1,139 @@
+[
+  {
+    "id": "QA-001",
+    "complexity": "простое",
+    "requirement": "Зарегистрированный пользователь может запросить сброс пароля по email. Ссылка действует 15 минут и может быть использована только один раз.",
+    "reference_scenarios": [
+      {"id": "valid_request", "description": "Для зарегистрированного email отправляется письмо со ссылкой.", "expected_priority": "высокий"},
+      {"id": "valid_reset", "description": "Переход по неиспользованной ссылке до истечения 15 минут позволяет задать новый пароль.", "expected_priority": "высокий"},
+      {"id": "expired_link", "description": "Ссылка после 15 минут не позволяет изменить пароль.", "expected_priority": "высокий"},
+      {"id": "one_time_link", "description": "Повторное использование уже использованной ссылки запрещено.", "expected_priority": "средний"}
+    ]
+  },
+  {
+    "id": "QA-002",
+    "complexity": "среднее",
+    "requirement": "При регистрации email должен быть уникальным, пароль — не короче 12 символов. Аккаунт становится активным только после подтверждения email по ссылке из письма.",
+    "reference_scenarios": [
+      {"id": "valid_registration", "description": "Регистрация с уникальным email и паролем длиной не менее 12 символов создаёт ожидающую подтверждения учётную запись.", "expected_priority": "высокий"},
+      {"id": "duplicate_email", "description": "Повторная регистрация с уже занятым email отклоняется.", "expected_priority": "высокий"},
+      {"id": "short_password", "description": "Пароль короче 12 символов не принимается.", "expected_priority": "высокий"},
+      {"id": "email_confirmation", "description": "Аккаунт активируется после перехода по ссылке подтверждения.", "expected_priority": "высокий"},
+      {"id": "unconfirmed_account", "description": "До подтверждения email аккаунт неактивен.", "expected_priority": "средний"}
+    ]
+  },
+  {
+    "id": "QA-003",
+    "complexity": "простое",
+    "requirement": "Поиск товаров выполняется по названию без учёта регистра. Если совпадений нет, пользователь видит сообщение «Ничего не найдено».",
+    "reference_scenarios": [
+      {"id": "matching_search", "description": "Товар находится по совпадающему названию.", "expected_priority": "высокий"},
+      {"id": "case_insensitive", "description": "Регистр букв в запросе не влияет на найденные совпадения.", "expected_priority": "средний"},
+      {"id": "no_results", "description": "При отсутствии совпадений отображается указанное сообщение.", "expected_priority": "средний"}
+    ]
+  },
+  {
+    "id": "QA-004",
+    "complexity": "среднее",
+    "requirement": "Доставка бесплатна при сумме товаров от 5000 рублей включительно. При сумме меньше 5000 рублей стоимость доставки составляет 300 рублей.",
+    "reference_scenarios": [
+      {"id": "below_threshold", "description": "При сумме товаров меньше 5000 рублей к заказу добавляется 300 рублей доставки.", "expected_priority": "высокий"},
+      {"id": "at_threshold", "description": "При сумме ровно 5000 рублей доставка бесплатна.", "expected_priority": "высокий"},
+      {"id": "above_threshold", "description": "При сумме больше 5000 рублей доставка бесплатна.", "expected_priority": "средний"},
+      {"id": "total_calculation", "description": "Итоговая сумма включает товары и рассчитанную стоимость доставки.", "expected_priority": "средний"}
+    ]
+  },
+  {
+    "id": "QA-005",
+    "complexity": "среднее",
+    "requirement": "Форма принимает файлы формата PDF и PNG размером не более 10 МБ. Файлы других форматов и файлы больше 10 МБ должны отклоняться.",
+    "reference_scenarios": [
+      {"id": "pdf_upload", "description": "PDF размером не более 10 МБ принимается.", "expected_priority": "высокий"},
+      {"id": "png_upload", "description": "PNG размером не более 10 МБ принимается.", "expected_priority": "высокий"},
+      {"id": "size_limit", "description": "Файл размером ровно 10 МБ принимается.", "expected_priority": "средний"},
+      {"id": "oversized_file", "description": "Файл больше 10 МБ отклоняется.", "expected_priority": "высокий"},
+      {"id": "unsupported_format", "description": "Файл формата, отличного от PDF и PNG, отклоняется.", "expected_priority": "высокий"}
+    ]
+  },
+  {
+    "id": "QA-006",
+    "complexity": "среднее",
+    "requirement": "После пяти неудачных попыток входа учётная запись блокируется на 15 минут. До окончания блокировки вход в аккаунт невозможен.",
+    "reference_scenarios": [
+      {"id": "four_failures", "description": "После четырёх неудачных попыток учётная запись ещё не заблокирована.", "expected_priority": "средний"},
+      {"id": "fifth_failure", "description": "Пятая неудачная попытка приводит к блокировке.", "expected_priority": "высокий"},
+      {"id": "blocked_login", "description": "Вход невозможен в течение периода блокировки.", "expected_priority": "высокий"},
+      {"id": "unlock_after_period", "description": "После 15 минут блокировка больше не препятствует входу.", "expected_priority": "средний"}
+    ]
+  },
+  {
+    "id": "QA-007",
+    "complexity": "сложное",
+    "requirement": "Пользователь может забронировать свободный 30-минутный временной слот в течение следующих 30 дней. Один слот нельзя забронировать дважды. Отменить запись можно не позднее чем за два часа до её начала.",
+    "reference_scenarios": [
+      {"id": "available_slot", "description": "Свободный слот длительностью 30 минут в пределах 30 дней можно забронировать.", "expected_priority": "высокий"},
+      {"id": "date_boundary", "description": "Слот в пределах следующих 30 дней доступен, слот за пределами периода недоступен.", "expected_priority": "средний"},
+      {"id": "duplicate_booking", "description": "Уже забронированный слот нельзя забронировать повторно.", "expected_priority": "высокий"},
+      {"id": "cancel_early", "description": "Запись можно отменить более чем за два часа до начала.", "expected_priority": "средний"},
+      {"id": "cancel_boundary", "description": "Отмена за два часа до начала допустима, позже — недоступна.", "expected_priority": "высокий"}
+    ]
+  },
+  {
+    "id": "QA-008",
+    "complexity": "сложное",
+    "requirement": "В проекте автор и рецензент могут добавлять комментарии. Просмотрщик может только читать комментарии. Автор может редактировать и удалять только собственные комментарии.",
+    "reference_scenarios": [
+      {"id": "author_add", "description": "Автор может добавить комментарий.", "expected_priority": "высокий"},
+      {"id": "reviewer_add", "description": "Рецензент может добавить комментарий.", "expected_priority": "высокий"},
+      {"id": "viewer_read_only", "description": "Просмотрщик видит комментарии, но не может добавить, изменить или удалить их.", "expected_priority": "высокий"},
+      {"id": "own_comment", "description": "Автор может редактировать и удалять собственный комментарий.", "expected_priority": "средний"},
+      {"id": "other_comment", "description": "Автор не может редактировать или удалять комментарий другого пользователя.", "expected_priority": "высокий"}
+    ]
+  },
+  {
+    "id": "QA-009",
+    "complexity": "среднее",
+    "requirement": "При смене email на новый адрес отправляется ссылка подтверждения, действующая 30 минут. До подтверждения сохраняется старый email. Нельзя сменить адрес на уже занятый другим аккаунтом.",
+    "reference_scenarios": [
+      {"id": "confirmation_sent", "description": "После запроса смены email на новый адрес отправляется ссылка.", "expected_priority": "высокий"},
+      {"id": "old_email_retained", "description": "До подтверждения продолжает использоваться старый email.", "expected_priority": "высокий"},
+      {"id": "confirmation_expiry", "description": "Ссылка после 30 минут не подтверждает смену email.", "expected_priority": "средний"},
+      {"id": "occupied_email", "description": "Адрес, уже занятый другим аккаунтом, нельзя установить.", "expected_priority": "высокий"},
+      {"id": "confirmed_change", "description": "Подтверждённая смена устанавливает новый email.", "expected_priority": "высокий"}
+    ]
+  },
+  {
+    "id": "QA-010",
+    "complexity": "простое",
+    "requirement": "Список по умолчанию содержит 20 записей на страницу. Размер страницы можно увеличить, но не более чем до 100. Нумерация страниц начинается с 1. В ответе указывается общее количество записей.",
+    "reference_scenarios": [
+      {"id": "default_page_size", "description": "Без параметра размера возвращается не более 20 записей.", "expected_priority": "средний"},
+      {"id": "custom_page_size", "description": "Размер страницы больше 20 и не более 100 применяется.", "expected_priority": "средний"},
+      {"id": "max_page_size", "description": "Запрос размера 100 допустим, запрос больше 100 ограничивается или отклоняется.", "expected_priority": "средний"},
+      {"id": "page_number", "description": "Первая страница имеет номер 1; номер меньше 1 не принимается.", "expected_priority": "средний"},
+      {"id": "total_count", "description": "Ответ содержит общее количество записей.", "expected_priority": "низкий"}
+    ]
+  },
+  {
+    "id": "QA-011",
+    "complexity": "сложное",
+    "requirement": "При повторной отправке одного и того же запроса на оплату с тем же ключом идемпотентности списание выполняется не более одного раза и создаётся не более одного заказа. Если оплата отклонена, заказ не создаётся.",
+    "reference_scenarios": [
+      {"id": "single_payment", "description": "Первый корректный запрос приводит к одному списанию и одному заказу.", "expected_priority": "высокий"},
+      {"id": "duplicate_request", "description": "Повторный запрос с тем же ключом идемпотентности не создаёт второе списание или заказ.", "expected_priority": "высокий"},
+      {"id": "declined_payment", "description": "При отклонённой оплате заказ не создаётся.", "expected_priority": "высокий"}
+    ]
+  },
+  {
+    "id": "QA-012",
+    "complexity": "сложное",
+    "requirement": "За каждые полные 100 рублей оплаченного заказа начисляется 1 бонусный балл после завершения заказа. При отмене заказа начисленные за него баллы списываются. Баллами можно оплатить не более 30% стоимости нового заказа.",
+    "reference_scenarios": [
+      {"id": "points_accrual", "description": "За каждые полные 100 рублей начисляется один балл после завершения заказа.", "expected_priority": "высокий"},
+      {"id": "partial_hundred", "description": "Неполная сотня рублей не даёт дополнительного балла.", "expected_priority": "средний"},
+      {"id": "cancel_order", "description": "При отмене заказа начисленные за него баллы списываются.", "expected_priority": "высокий"},
+      {"id": "redeem_limit", "description": "Баллами нельзя оплатить больше 30% стоимости нового заказа.", "expected_priority": "высокий"},
+      {"id": "redeem_boundary", "description": "Оплата ровно 30% баллами допустима.", "expected_priority": "средний"}
+    ]
+  }
+]
