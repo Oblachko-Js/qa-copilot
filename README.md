@@ -83,6 +83,7 @@ uvicorn app.main:app --reload
 
 - [Декомпозиция AI-системы для оценки](docs/dekompozitsiya-ai-sistemy.md)
 - [Критерии оценки AI-системы](docs/kriterii-otsenki-ai-sistemy.md)
+- [Подходы к оценке критериев](docs/podhody-k-otsenke.md)
 
 ## План развития
 
