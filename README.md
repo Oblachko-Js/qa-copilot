@@ -82,6 +82,7 @@ uvicorn app.main:app --reload
 ## Материалы курса
 
 - [Декомпозиция AI-системы для оценки](docs/dekompozitsiya-ai-sistemy.md)
+- [Критерии оценки AI-системы](docs/kriterii-otsenki-ai-sistemy.md)
 
 ## План развития
 
