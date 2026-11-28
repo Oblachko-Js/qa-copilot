@@ -101,6 +101,7 @@ python -m scripts.run_evaluation \
 ## Материалы курса
 
 - [Эксперимент по проектированию промпта](docs/prompt-engineering-experiment.md)
+- [Прототип Schema-Guided Reasoning](docs/sgr-prototype.md)
 - [Декомпозиция AI-системы для оценки](docs/dekompozitsiya-ai-sistemy.md)
 - [Критерии оценки AI-системы](docs/kriterii-otsenki-ai-sistemy.md)
 - [Подходы к оценке критериев](docs/podhody-k-otsenke.md)
