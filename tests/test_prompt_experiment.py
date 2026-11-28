@@ -1,7 +1,6 @@
 from pathlib import Path
 import unittest
 
-from app.main import build_prompt
 from scripts.run_evaluation import load_dataset
 from scripts.run_prompt_experiment import PRACTICES, build_experimental_prompt
 
@@ -15,10 +14,19 @@ class PromptExperimentTests(unittest.TestCase):
         examples = load_dataset(PROJECT_ROOT / "evaluation/data/test_requirements.json")
         cls.example = next(example for example in examples if example.id == "QA-001")
 
-    def test_baseline_matches_current_application_prompt(self) -> None:
+    def test_baseline_preserves_the_original_application_prompt(self) -> None:
+        expected_prompt = (
+            "Составь краткий, но полный набор тест-кейсов для требования ниже. "
+            "Все текстовые значения пиши на русском языке. "
+            "Для priority используй только одно из значений: низкий, средний, высокий. "
+            "Верни структурированные данные с полями title, preconditions, steps, "
+            "expected_result и priority. "
+            "Составь от 1 до 5 тест-кейсов.\n\n"
+            f"Требование: {self.example.requirement}"
+        )
         self.assertEqual(
             build_experimental_prompt(self.example, max_cases=5, step=0),
-            build_prompt(self.example.requirement, max_cases=5),
+            expected_prompt,
         )
 
     def test_experiment_contains_all_nine_ordered_versions(self) -> None:
